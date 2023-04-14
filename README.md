@@ -1,4 +1,4 @@
-# Public-School-Characteristics-in-Callifornia
+# Public_School_Characteristics_2020-2021
 
 **Group Members**
 Brielle Bernardy
