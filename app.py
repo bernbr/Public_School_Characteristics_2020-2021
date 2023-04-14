@@ -3,6 +3,7 @@
 from flask import Flask
 from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
+from bson.json_util import dumps
 
 #################################################
 # Load Data
@@ -35,7 +36,8 @@ def welcome():
 @cross_origin(supports_credentials=True)  # to prevent CORS errors
 def school_data():
 
-    return (characteristics)
+    results = (characteristics.find())
+    return dumps(results)
 
 
 if __name__ == '__main__':
