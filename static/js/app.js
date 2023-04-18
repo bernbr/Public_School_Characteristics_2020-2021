@@ -2,11 +2,12 @@
 const url = "http://127.0.0.1:5000/api/v1.0/school_data";
 // Fetch the JSON data within init function with d3.json within .then 
 init = () => {d3.json(url).then((data) => {
-    console.log('data: ', data.length);
+    console.log('data: ', data);
 
     //use danco library to make dataframe
     df = new dfd.DataFrame(data);    
     console.log('df: ', df);
+      df.print()
 
     let states = df["States_Territories"].unique().$data;
 
@@ -31,7 +32,7 @@ console.log('Sfilter: ', Sfilter);
 // statesData = new dfd.DataFrame(Sfilter);
 
 // console.log('statesData: ', statesData);
-// print(statesData);
+// statesData.print();
 dict = Object.fromEntries(Object.entries(Sfilter).filter(([k,v])=>v>0));
 
 // dict = Object.entries(Sfilter)
@@ -45,8 +46,8 @@ for (let item in dict)
     
 
     // console.log('dict: ', dict);
-    console.log('dict: ', Object.values(dict));
-    console.log('dict.keys: ', Object.keys(dict));
+    // console.log('dict: ', Object.values(dict));
+    // console.log('dict.keys: ', Object.keys(dict));
 
     
     let bar = [
@@ -59,7 +60,18 @@ for (let item in dict)
       ];
       Plotly.newPlot('bar', bar);
 
-
+      var data = [{
+        values: Object.values(dict),
+        labels: Object.keys(dict),
+        type: 'pie'
+      }];
+      
+      var layout = {
+        height: 400,
+        width: 500
+      };
+      
+      Plotly.newPlot('pie', data, layout);
 
       
 }
