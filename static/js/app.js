@@ -4,19 +4,17 @@ const url = "http://127.0.0.1:5000/api/v1.0/school_data";
 init = () => {d3.json(url).then((data) => {
     console.log('data: ', data);
 
-    //use danco library to make dataframe
+    //use danfo library to make dataframe
     df = new dfd.DataFrame(data);    
     console.log('df: ', df);
-      df.print()
+    //   df.print()
 
-    let states = df["States_Territories"].unique().$data;
+    let states = df["States_Territories"].unique().$data.sort();
 
     for (let state in states)
         {d3.select("#selDataset").append("option").property("value", states[state]).text(states[state])};
 
-        let Lstate= "Alabama"//initial state
-        d3.select("#selDataset").property("value", Lstate) ;
-        graphs(data, Lstate)//sent to graphs on load
+    graphs(data, "Minnesota")//sent to graphs on load
 optionChanged = state =>{
     graphs(data, state);
     };
@@ -27,13 +25,14 @@ optionChanged = state =>{
 
 function graphs(data, state){
 
+d3.select("#selDataset").property("value", state) ;//loads state sent on load
 let Sfilter=   data.filter(ds => ds.States_Territories == (state))[0];
 console.log('Sfilter: ', Sfilter);
-// statesData = new dfd.DataFrame(Sfilter);
+statesData = new dfd.DataFrame([Sfilter]).dropNa({ axis: 0}) ;
 
 // console.log('statesData: ', statesData);
-// statesData.print();
-dict = Object.fromEntries(Object.entries(Sfilter).filter(([k,v])=>v>0));
+statesData.print();
+dict = Object.fromEntries(Object.entries(Sfilter).sort(([,a],[,b]) => a-b).filter(([k,v])=>v>0));
 
 // dict = Object.entries(Sfilter)
 
@@ -45,7 +44,7 @@ for (let item in dict)
     
     
 
-    // console.log('dict: ', dict);
+    console.log('dict: ', dict);
     // console.log('dict: ', Object.values(dict));
     // console.log('dict.keys: ', Object.keys(dict));
 
@@ -60,18 +59,17 @@ for (let item in dict)
       ];
       Plotly.newPlot('bar', bar);
 
-      var data = [{
+      let pie = [{
         values: Object.values(dict),
         labels: Object.keys(dict),
         type: 'pie'
       }];
       
-      var layout = {
-        height: 400,
-        width: 500
-      };
+
       
-      Plotly.newPlot('pie', data, layout);
+      Plotly.newPlot('pie', pie);
+
+      statesData.loc({ columns: Object.keys(dict)}).plot("bubble").bar()
 
       
 }
