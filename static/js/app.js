@@ -13,8 +13,18 @@ init = () => {d3.json(url).then((data) => {
     for (let state in states)
         {d3.select("#selDataset").append("option").property("value", states[state]).text(states[state])};
 
-
+        let state= "Alabama"//initial state
+        d3.select("#selDataset").property("value", state) ;
 optionChanged = state =>{
+    graphs(data, state);
+    };
+
+});
+
+}
+
+function graphs(data, state){
+
     // visuals(df, state);
     let Sfilter=   data.filter(ds => ds.States_Territories == (state))[0];
 console.log('Sfilter: ', Sfilter);
@@ -23,15 +33,32 @@ console.log('Sfilter: ', Sfilter);
 // console.log('statesData: ', statesData);
 // print(statesData);
 dict = Object.fromEntries(Object.entries(Sfilter).filter(([k,v])=>v>0));
+
 // dict = Object.entries(Sfilter)
-//.map(e => e.join(': '));
+
 d3.select("#sample-metadata").html('');
 //.entries in javascript is like .items in python
 for (let item in dict)
-    {d3.select(".panel-body").append("h6").text(dict[item])};//populate demographics panel body appending h6 row for every value
-    };
-});
+// console.log('dict: ', dict);
+    d3.select(".panel-body").append("h6").text(dict[item]);//populate demographics panel body appending h6 row for every value
+    
+    dict = Object.fromEntries(Object.entries(Sfilter).filter(([k,v])=>v>0));
+    console.log('dict: ', dict);
+    console.log('dict: ', Object.values(dict));
+    console.log('dict.keys: ', Object.keys(dict));
+    let bar = [
+        {
+          x: Object.keys(dict),
+ 
+          y: Object.values(dict),
+          type: 'bar'
+        }
+      ];
+      Plotly.newPlot('bar', bar);
 
+
+
+      
 }
 
 init();
