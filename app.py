@@ -8,7 +8,7 @@ from bson.json_util import dumps
 #################################################
 # Load Data
 #################################################
-#Import csv to mongo with: mongoimport --type csv -d PublicSchool2021 -c characteristics --headerline --drop Public_School_Characteristics_2020-21_kw.csv
+#Import csv to mongo with: mongoimport --type csv -d PublicSchool2021 -c characteristics --headerline --drop Compiled_Public_School_Characteristics.csv
 # Connect to YOUR database here...
 # To keep this example simple, I'm just loading a data.json file 
 # But for your project, this is where the database connection should go
