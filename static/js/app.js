@@ -60,8 +60,8 @@ for (let item in dict)
       Plotly.newPlot('bar', bar);
 
       let pie = [{
-        values: Object.values(dict),
-        labels: Object.keys(dict),
+        values: [dict.TS_FullVirtual_Sum, dict.TS_NotVirtual_Sum, dict.TS_VirtualFFOptions_Sum, dict.TS_SupplementalVirtual_Sum],
+        labels: ["Total Students Virtual", "Total Students Not Virtual", "Total Students Virtual with Face to Face options", "Total Students Supplemental Virtual"],
         type: 'pie'
       }];
       
