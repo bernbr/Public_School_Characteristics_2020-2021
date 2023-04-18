@@ -36,7 +36,7 @@ def welcome():
 @cross_origin(supports_credentials=True)  # to prevent CORS errors
 def school_data():
 
-    results = (characteristics.find())
+    results = characteristics.find({},{'_id':False})
     return dumps(results)
 
 
