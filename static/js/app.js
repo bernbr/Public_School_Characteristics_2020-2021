@@ -6,7 +6,7 @@ init = () => {d3.json(url).then((data) => {
 
     //use danfo library to make dataframe
     df = new dfd.DataFrame(data);    
-    console.log('df: ', df);
+    console.log('df: ', df.sum(axis=1));
     //   df.print()
 
     let states = df["States_Territories"].unique().$data.sort();
@@ -25,9 +25,9 @@ optionChanged = state =>{
 
 function graphs(data, state){
 
-d3.select("#selDataset").property("value", state) ;//loads state sent on load
+d3.select("#selDataset").property("value", state) ;//loads state sent on load to dropdown
 let Sfilter=   data.filter(ds => ds.States_Territories == (state))[0];
-console.log('Sfilter: ', Sfilter);
+// console.log('Sfilter: ', Sfilter);
 statesData = new dfd.DataFrame([Sfilter]).dropNa({ axis: 0}) ;
 
 // console.log('statesData: ', statesData);
@@ -73,16 +73,28 @@ for (let item in dict)
 
       
 }
+console.log('statesData: ', statesData);
+
+
 let map = L.map("map", {
   center: [
     33, -100
   ],
-  zoom: 5,
+  zoom: 4,
   maxBounds: [[5.499550, -167.276413], //Southwest
-              [83.162102, -52.233040]  //Northeast
+              [73.162102, -52.233040]  //Northeast
 ],
   layers: [L.tileLayer.provider('Esri.WorldStreetMap')]
 });
+
+L.geoJson(statesData, {
+  onEachFeature: function(feature, layer) {
+  // console.log('feature: ', feature.properties);
+  layer.bindPopup(`<h6>State Name:  ${feature.properties.name} </h6>`);
+
+}
+  
+}).addTo(map);
 
 init();
 
