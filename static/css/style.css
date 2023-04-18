@@ -1,0 +1,8 @@
+/*https://gis.stackexchange.com/questions/315754/using-leaflet-inside-bootstrap-container*/
+#map {
+  position: relative;
+  border: 1px solid black;
+  border-radius: 8px;
+  height: 400px;  /* or as desired */
+  width: 100%;  /* This means "100% of the width of its container", the .col-md-8 */
+}

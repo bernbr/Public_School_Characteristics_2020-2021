@@ -31,12 +31,12 @@ console.log('Sfilter: ', Sfilter);
 statesData = new dfd.DataFrame([Sfilter]).dropNa({ axis: 0}) ;
 
 // console.log('statesData: ', statesData);
-statesData.print();
+// statesData.print();
 dict = Object.fromEntries(Object.entries(Sfilter).sort(([,a],[,b]) => a-b).filter(([k,v])=>v>0));
 
 // dict = Object.entries(Sfilter)
 
-d3.select("#sample-metadata").html('');
+d3.select("#sample-metadata").html('');//clear data from panel before optionchanged
 //.entries in javascript is like .items in python
 for (let item in dict)
 
@@ -69,10 +69,20 @@ for (let item in dict)
       
       Plotly.newPlot('pie', pie);
 
-      statesData.loc({ columns: Object.keys(dict)}).plot("bubble").bar()
+      // statesData.loc({ columns: Object.keys(dict)}).plot("map").bar()
 
       
 }
+let map = L.map("map", {
+  center: [
+    33, -100
+  ],
+  zoom: 5,
+  maxBounds: [[5.499550, -167.276413], //Southwest
+              [83.162102, -52.233040]  //Northeast
+],
+  layers: [L.tileLayer.provider('Esri.WorldStreetMap')]
+});
 
 init();
 
