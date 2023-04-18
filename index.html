@@ -17,21 +17,21 @@
 
 <body>
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12 jumbotron text-center">
+      <div class="col-md-12 jumbotron text-center"style="background-color: #17a2b8;">
         <h1>Public_School_Characteristics_2020-2021</h1>
         <p>Use the interactive charts below to explore the dataset</p>
       </div>
     </div>
     <div class="row">
       <div class="col-md-2">
-        <div class="well">
+        <div class="dropdown">
           <h5>States/Territories:</h5>
           <select id="selDataset" onchange="optionChanged(this.value)"></select>
         </div>
         <div class="panel panel-primary">
-          <div class="panel-heading">
+          <div class="panel-heading"border-color='#3E7DC0'>
             <h3 class="panel-title">Virtual not virtual info</h3>
           </div>
           <div id="sample-metadata" class="panel-body"></div>
