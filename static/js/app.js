@@ -2,11 +2,11 @@
 const url = "http://127.0.0.1:5000/api/v1.0/school_data";
 // Fetch the JSON data within init function with d3.json within .then 
 init = () => {d3.json(url).then((data) => {
-    console.log('data: ', data);
+    // console.log('data: ', data);
 
     //use danfo library to make dataframe
     df = new dfd.DataFrame(data);    
-    console.log('df: ', df.sum(axis=1));
+    // console.log('df: ', df);
     //   df.print()
 
     let states = df["States_Territories"].unique().$data.sort();
@@ -44,7 +44,7 @@ for (let item in dict)
     
     
 
-    console.log('dict: ', dict);
+    // console.log('dict: ', dict);
     // console.log('dict: ', Object.values(dict));
     // console.log('dict.keys: ', Object.keys(dict));
 
@@ -82,7 +82,7 @@ for (let item in dict)
       
       Plotly.newPlot('pie', pie);
 
-      // statesData.loc({ columns: Object.keys(dict)}).plot("map").bar()
+
 
       
 }
@@ -94,7 +94,7 @@ const map = L.map("map", {
     33, -100
   ],
   zoom: 4,
-  maxBounds: [[5.499550, -167.276413], //Southwest
+  maxBounds: [[5.499550, -172.276413], //Southwest
               [73.162102, -52.233040]  //Northeast
 ],
   layers: [L.tileLayer.provider('Esri.WorldStreetMap')]
@@ -139,23 +139,42 @@ info.addTo(map);
 geogson = L.geoJson(statesData, {
   onEachFeature: function(feature, layer) {
   // console.log('feature: ', feature.properties);
-  layer.bindPopup(`<h6>State Name:  ${feature.properties.name}<br/> ${feature.properties.Learning_Platform_Majority} </h6> `);
+  // layer.bindPopup(`<h6>State Name:  ${feature.properties.name}<br/> ${feature.properties.Learning_Platform_Majority} </h6> `);
   layer.on({
     mouseover: highlightFeature,
     mouseout: resetHighlight,
     // click: zoomToFeature
 });},
-style: () => {
-  return {
+
+style: {
+  
   color: "#3E7DC0",
   fillOpacity: 0,
-
-  };
-}
-
   
+}
+ 
 }).addTo(map);
 
+d3.json("http://127.0.0.1:5000/api/v1.0/more_data").then((data) => {
+  // console.log(data);
+  features = data.features
+  console.log('data.features: ', data.features[0].properties);
+  let markers = L.markerClusterGroup();
+  for (let i in features) {
+
+    // Set the features geometry property to a variable.
+    let geometry = features[i].geometry;
+    // Check for the geometry property.
+    if (geometry) {
+   
+
+      // Add a new marker to the cluster group, and bind a popup.
+      markers.addLayer(L.marker([geometry.coordinates[1], geometry.coordinates[0]])
+        .bindPopup(`<h6>${Object.entries(features[i].properties).map(e => e.join(':  '))},"<br>" </h6>`));
+    }
+  }
+  map.addLayer(markers);
+});
 init();
 
 
