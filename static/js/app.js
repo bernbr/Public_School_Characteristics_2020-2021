@@ -32,7 +32,7 @@ statesData = new dfd.DataFrame([Sfilter]).dropNa({ axis: 0}) ;
 
 // console.log('statesData: ', statesData);
 // statesData.print();
-dict = Object.fromEntries(Object.entries(Sfilter).sort(([,a],[,b]) => a-b).filter(([k,v])=>v>0));
+dict = Object.fromEntries(Object.entries(Sfilter).filter(([k,v])=>v>0));
 
 // dict = Object.entries(Sfilter)
 
@@ -66,7 +66,7 @@ for (let item in dict)
           autosize: false,
           width: 500,
           height: 500,
-          yaxis: {
+          xaxis: {
             automargin: true,
           }}; 
       //
@@ -89,7 +89,7 @@ for (let item in dict)
 console.log('statesData: ', statesData);
 
 
-let map = L.map("map", {
+const map = L.map("map", {
   center: [
     33, -100
   ],
@@ -100,12 +100,59 @@ let map = L.map("map", {
   layers: [L.tileLayer.provider('Esri.WorldStreetMap')]
 });
 
-L.geoJson(statesData, {
+function highlightFeature(e) {
+  let layer = e.target;
+
+  layer.setStyle({
+      weight: 5,
+      color: 'yellow',
+      dashArray: '',
+      fillOpacity: .02
+  });
+
+  layer.bringToFront();
+  info.update(layer.feature.properties);
+}
+
+function zoomToFeature(e) {
+  map.fitBounds(e.target.getBounds());
+}
+
+  function resetHighlight(e) {
+    geogson.resetStyle(e.target);
+}
+let info = L.control()
+info.onAdd = function (map) {
+  this._div = L.DomUtil.create('div', 'info');
+  this.update();
+  return this._div;
+};
+//borrowed from https://leafletjs.com/examples/choropleth/example.html
+info.update = function (props) {
+  const contents = props ? `<b>${props.name}</b><br />${props.Learning_Platform_Majority} ` : 'Hover over a state';
+  this._div.innerHTML = `<h4>US Learning Platforms</h4>${contents}`;
+};
+
+info.addTo(map);
+    
+
+geogson = L.geoJson(statesData, {
   onEachFeature: function(feature, layer) {
   // console.log('feature: ', feature.properties);
   layer.bindPopup(`<h6>State Name:  ${feature.properties.name}<br/> ${feature.properties.Learning_Platform_Majority} </h6> `);
+  layer.on({
+    mouseover: highlightFeature,
+    mouseout: resetHighlight,
+    // click: zoomToFeature
+});},
+style: () => {
+  return {
+  color: "#3E7DC0",
+  fillOpacity: 0,
 
+  };
 }
+
   
 }).addTo(map);
 
