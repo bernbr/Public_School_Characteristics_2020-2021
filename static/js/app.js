@@ -49,15 +49,28 @@ for (let item in dict)
     // console.log('dict.keys: ', Object.keys(dict));
 
     
-    let bar = [
-        {
-          x: Object.keys(dict),
- 
-          y: Object.values(dict),
-          type: 'bar'
-        }
-      ];
-      Plotly.newPlot('bar', bar);
+    let bar = [{
+          x: ["Total Students Virtual", "Total Students Not Virtual", "Total Students Supp. Virtual", "Total Virtual with Face to Face",
+          "PreK-5th Virtual", "PreK-5th Not Virtual", "PreK-5th Supp. Virtual", "PreK-5th Virtual with Face to Face",
+          "6th-8th Virtual", "6th-8th Not Virtual", "6th-8th Supp. Virtual", "6th-8th Virtual with Face to Face",
+          "9th-13th Virtual", "9th-13th Not Virtual", "9th-13th Supp. Virtual", "9th-13th Virtual with Face to Face"],
+          y: [dict.TS_FullVirtual_Sum, dict.TS_NotVirtual_Sum, dict.TS_SupplementalVirtual_Sum, dict.TS_VirtualFFOptions_Sum,
+            dict.PK_FullVirtual_Sum, dict.PK_NotVirtual_Sum, dict.PK_SupplementalVirtual_Sum, dict.PK_VirtualFFOptions_Sum,
+            dict.MS_FullVirtual_Sum, dict.MS_NotVirtual_Sum, dict.MS_SupplementalVirtual_Sum, dict.MS_VirtualFFOptions_Sum,
+            dict.HS_FullVirtual_Sum, dict.HS_NotVirtual_Sum, dict.HS_SupplementalVirtual_Sum, dict.HS_VirtualFFOptions_Sum],
+          
+        type: 'bar',  
+        }];
+        
+        let layout = {
+          autosize: false,
+          width: 500,
+          height: 500,
+          yaxis: {
+            automargin: true,
+          }}; 
+      //
+      Plotly.newPlot('bar', bar, layout);
 
       let pie = [{
         values: [dict.TS_FullVirtual_Sum, dict.TS_NotVirtual_Sum, dict.TS_VirtualFFOptions_Sum, dict.TS_SupplementalVirtual_Sum],
@@ -90,7 +103,7 @@ let map = L.map("map", {
 L.geoJson(statesData, {
   onEachFeature: function(feature, layer) {
   // console.log('feature: ', feature.properties);
-  layer.bindPopup(`<h6>State Name:  ${feature.properties.name} </h6>`);
+  layer.bindPopup(`<h6>State Name:  ${feature.properties.name}<br/> ${feature.properties.Learning_Platform_Majority} </h6> `);
 
 }
   
