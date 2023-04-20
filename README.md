@@ -9,6 +9,7 @@ Brian Omirera, &
 Katelyn Walsh
 
 **Dataset:**   https://catalog.data.gov/dataset/public-school-characteristics-2020-21
+**SlideShow:**  https://docs.google.com/presentation/d/1r0SgK9-EgtBMNyo7jssPhzX3h1t6u8VEpzs2u2ia-a4/edit?usp=sharing
 
 **Summary:** 
 Our data visualization will help us understand different state approaches to virtual learning following the COVID19 outbreak. Additionally, it will provide details on the state’s approach to virtual learning at different grade levels of education. Our visualizations will support each other by providing different levels of detail. 
