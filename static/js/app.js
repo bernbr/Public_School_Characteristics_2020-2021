@@ -150,7 +150,7 @@ geogson = L.geoJson(statesData, {
 
 style: {
   
-  color: "#3E7DC0",
+  color: "green",
   fillOpacity: 0,
   
 }
