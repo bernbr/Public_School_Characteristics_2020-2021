@@ -88,7 +88,7 @@ for (let item in dict)
 
       
 }
-console.log('statesData: ', statesData);
+// console.log('statesData: ', statesData);
 
 
 const map = L.map("map", {
@@ -96,7 +96,7 @@ const map = L.map("map", {
     33, -100
   ],
   zoom: 4,
-  maxBounds: [[5.499550, -172.276413], //Southwest
+  maxBounds: [[-20.499550, -172.276413], //Southwest
               [73.162102, -52.233040]  //Northeast
 ],
   layers: [L.tileLayer.provider('Esri.WorldStreetMap')]
@@ -145,7 +145,7 @@ geogson = L.geoJson(statesData, {
   layer.on({
     mouseover: highlightFeature,
     mouseout: resetHighlight,
-    // click: zoomToFeature
+    click: zoomToFeature
 });},
 
 style: {
