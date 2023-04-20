@@ -170,7 +170,7 @@ d3.json("http://127.0.0.1:5000/api/v1.0/more_data").then((data) => {
 
       // Add a new marker to the cluster group, and bind a popup.
       markers.addLayer(L.marker([geometry.coordinates[1], geometry.coordinates[0]])
-        .bindPopup(`<h6>${Object.entries(features[i].properties).map(e => e.join(':  '))},"<br>" </h6>`));
+        .bindPopup(`<h6>${Object.entries(features[i].properties).map(e => '<br>'+e.join(':  ')).join('')} </h6>`));
     }
   }
   map.addLayer(markers);
