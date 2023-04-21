@@ -35,14 +35,14 @@ let Sfilter=   data.filter(ds => ds.States_Territories == (state))[0];
 // console.log('Sfilter: ', Sfilter);
 
 // Define dictionary and ensure the values returned are greater than 0
-dict = Object.fromEntries(Object.entries(Sfilter).filter(([k,v])=>v>0));
+dict = Object.fromEntries(Object.entries(Sfilter).sort(([,a],[,b]) => a-b).filter(([k,v])=>v>0));
 
 
 d3.select("#sample-metadata").html('');//clear data from panel before optionchanged
 //.entries in javascript is like .items in python
 for (let item in dict)
 
-    {d3.select(".panel-body").append("h6").text(`${item}: ${dict[item]}`);};//populate demographics panel body appending h6 row for every value
+    {d3.select("#sample-metadata").append("h6").text(`${item}: ${dict[item]}`);};//populate demographics panel body appending h6 row for every value
   
   //Console.log to explore referencing keys and values for graphs
     // console.log('dict: ', dict);
