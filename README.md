@@ -29,4 +29,4 @@ Our data visualization will help us understand different state approaches to vir
 
 ![image](https://user-images.githubusercontent.com/119619559/233237020-7ca38037-c35c-4e0c-919a-02881c8d9072.png)
 
-```geojson(https://github.com/bernbr/Public_School_Characteristics_2020-2021/blob/main/static/PSC.geojson)
+```geojson(static/PSC.geojson)
